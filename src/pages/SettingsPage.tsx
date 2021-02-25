@@ -16,7 +16,7 @@ const SettingsPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        Add some content here…
+        This is the settings page.
       </IonContent>
     </IonPage>
   );

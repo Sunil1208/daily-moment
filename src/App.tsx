@@ -1,7 +1,8 @@
 import {
-  IonApp, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs
+  IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import { home as homeIcon, settings as settingsIcon } from 'ionicons/icons';
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import HomePage from './pages/HomePage';
@@ -25,9 +26,11 @@ const App: React.FC = () => {
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="home" href="/home">
+              <IonIcon icon={homeIcon} />
               <IonLabel>Home</IonLabel>
             </IonTabButton>
             <IonTabButton tab="settings" href="/settings">
+              <IonIcon icon={settingsIcon} />
               <IonLabel>Settings</IonLabel>
             </IonTabButton>
           </IonTabBar>

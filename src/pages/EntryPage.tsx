@@ -7,6 +7,7 @@ import {
 } from '@ionic/react';
 import React from 'react';
 import { useParams } from 'react-router';
+import { entries } from '../data';
 
 interface RouterParams {
   entryId: string;
@@ -14,6 +15,10 @@ interface RouterParams {
 
 const EntryPage: React.FC = () => {
   const { entryId } = useParams<RouterParams>();
+  const entry = entries.find((entry) => entry.id === entryId);
+  if(!entry){
+    throw new Error(`No such entry: ${entryId}`);
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -22,7 +27,7 @@ const EntryPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        This is the entry page.
+        {entry.description}
       </IonContent>
     </IonPage>
   );

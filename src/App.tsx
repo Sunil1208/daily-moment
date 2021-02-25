@@ -1,5 +1,5 @@
 import {
-  IonApp, IonRouterOutlet
+  IonApp, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import React from 'react';
@@ -13,15 +13,25 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/home">
-            <HomePage />
-          </Route>
-          <Route exact path="/settings">
-            <SettingsPage />
-          </Route>
-          <Redirect exact path="/" to="/home" />
-        </IonRouterOutlet>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/home">
+              <HomePage />
+            </Route>
+            <Route exact path="/settings">
+              <SettingsPage />
+            </Route>
+            <Redirect exact path="/" to="/home" />
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="home" href="/home">
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="settings" href="/settings">
+              <IonLabel>Settings</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
       </IonReactRouter>
     </IonApp>
   );

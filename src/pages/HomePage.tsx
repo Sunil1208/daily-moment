@@ -22,7 +22,13 @@ const HomePage: React.FC = () => {
         <IonList>
           {entries.map((entry) => {
             return(
-              <IonItem key={entry.id}>{entry.description}</IonItem>
+              <IonItem 
+                button 
+                key={entry.id}
+                routerLink={`/entries/${entry.id}`}
+              >
+                {entry.description}
+              </IonItem>
             )
           })}
         </IonList>

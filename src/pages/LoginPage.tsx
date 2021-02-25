@@ -6,16 +6,16 @@ import {
   IonToolbar,
   IonButton
 } from '@ionic/react';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
-import { AuthContext } from '../auth';
+import { useAuth } from '../auth';
 
 
 interface Props {
   onLogin: () => void;
 }
 const LoginPage: React.FC<Props> = ({ onLogin }) => {
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn } = useAuth();
   if(loggedIn){
     return <Redirect to="/my/entries" />;
   }

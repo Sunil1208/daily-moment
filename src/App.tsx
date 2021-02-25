@@ -22,7 +22,7 @@ const App: React.FC = () => {
               />
             </Route>
             <Route path="/my">
-              <AppTabs loggedIn={loggedIn}/>
+              <AppTabs />
             </Route>
             <Redirect exact path="/" to="/my/entries" />
           </IonRouterOutlet>

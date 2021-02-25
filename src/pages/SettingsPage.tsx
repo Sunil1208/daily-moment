@@ -2,6 +2,7 @@ import {
   IonContent,
   IonHeader,
   IonPage,
+  IonRouterLink,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
@@ -17,7 +18,7 @@ const SettingsPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        Go to <Link to="/home">Home</Link>
+        Go to <IonRouterLink routerLink="/home">Home</IonRouterLink>
       </IonContent>
     </IonPage>
   );

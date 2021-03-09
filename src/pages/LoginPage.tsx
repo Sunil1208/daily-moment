@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
   const [status, setStatus] = useState({
     loading: false,
     error: false,
-    errorMessage: ''
+    errorMessage: null
   })
 
   const handleLogin = async () => {

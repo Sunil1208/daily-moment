@@ -17,7 +17,7 @@ import { Redirect } from 'react-router';
 import { useAuth } from '../auth';
 import { auth } from '../firebase'
 
-const LoginPage: React.FC = () => {
+const SignUpPage: React.FC = () => {
   const { loggedIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,18 +27,21 @@ const LoginPage: React.FC = () => {
     errorMessage: ''
   })
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     try {
       // "test1@example.org", "123456"
       setStatus({...status, loading: true, error: false});
-      const credential = await auth.signInWithEmailAndPassword(email, password)
+      const credential = await auth.createUserWithEmailAndPassword(email, password)
       console.log('credential', credential);
       setStatus({...status, loading: false, error: false});
     } catch (error) {
       console.log('error', error)
       setStatus({...status, loading: false, error: true, errorMessage: error.message});
+      const timer = setTimeout(() => {
+        setStatus({...status, loading: false, error: false, errorMessage: ''});
+      }, 5000);
+      clearTimeout(timer)
     }
-    
   }
   if(loggedIn){
     return <Redirect to="/my/entries" />;
@@ -47,7 +50,7 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Signup/ Register</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
@@ -70,9 +73,9 @@ const LoginPage: React.FC = () => {
         {status.error && (
           <IonText color="danger" >{status.errorMessage} &nbsp;</IonText>
         )}
-        <IonButton expand="block" onClick={handleLogin}>Login</IonButton>
-        <IonButton expand="block" fill="clear" routerLink="/signup">
-          Don't have an account ?
+        <IonButton expand="block" onClick={handleSignUp}>Signup</IonButton>
+        <IonButton fill="clear" expand="block" routerLink="/login">
+          Already have an account?
         </IonButton>
         <IonLoading isOpen={status.loading} />
       </IonContent>
@@ -80,4 +83,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

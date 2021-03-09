@@ -9,6 +9,7 @@ import { AuthContext } from './auth';
 import { auth } from './firebase';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import SignUpPage from './pages/SignUpPage';
 
 
 
@@ -33,6 +34,9 @@ const App: React.FC = () => {
             <Switch>
               <Route exact path="/login">
                 <LoginPage />
+              </Route>
+              <Route exact path="/signup">
+                <SignUpPage />
               </Route>
               <Route path="/my">
                 <AppTabs />

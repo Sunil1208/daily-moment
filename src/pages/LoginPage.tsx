@@ -17,10 +17,7 @@ import { Redirect } from 'react-router';
 import { useAuth } from '../auth';
 import { auth } from '../firebase'
 
-interface Props {
-  onLogin: () => void;
-}
-const LoginPage: React.FC<Props> = ({ onLogin }) => {
+const LoginPage: React.FC = () => {
   const { loggedIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,21 +28,15 @@ const LoginPage: React.FC<Props> = ({ onLogin }) => {
   })
 
   const handleLogin = async () => {
-    console.log('should login with', {email, password})
     try {
       // "test1@example.org", "123456"
       setStatus({...status, loading: true, error: false});
       const credential = await auth.signInWithEmailAndPassword(email, password)
       console.log('credential', credential);
       setStatus({...status, loading: false, error: false});
-      onLogin();
     } catch (error) {
       console.log('error', error)
       setStatus({...status, loading: false, error: true, errorMessage: error.message});
-      let timer = setTimeout(() => {
-        setStatus({...status, loading: false, error: false, errorMessage: ''});
-      }, 5000);
-      clearTimeout(timer);
     }
     
   }

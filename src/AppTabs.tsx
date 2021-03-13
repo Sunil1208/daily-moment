@@ -25,7 +25,7 @@ const AppTabs: React.FC = () => {
           <Route exact path="/my/settings">
             <SettingsPage />
           </Route>
-          <Route exact path="/my/entries/:entryId">
+          <Route exact path="/my/entries/:id">
             <EntryPage />
           </Route>
         </IonRouterOutlet>

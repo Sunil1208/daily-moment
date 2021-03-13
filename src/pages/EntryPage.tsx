@@ -7,20 +7,26 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import React from 'react';
-import { useParams } from 'react-router';
-import { entries } from '../data';
-
+import React, { useState, useEffect } from 'react';
+import { useRouteMatch } from 'react-router';
+// import { entries } from '../data';
+import { firestore } from '../firebase';
+import { Entry, toEntry }  from '../model';
 interface RouterParams {
-  entryId: string;
+  id: string;
 }
 
 const EntryPage: React.FC = () => {
-  const { entryId } = useParams<RouterParams>();
-  const entry = entries.find((entry) => entry.id === entryId);
-  if(!entry){
-    throw new Error(`No such entry: ${entryId}`);
-  }
+  const match = useRouteMatch<RouterParams>();
+  const { id } = match.params;
+  console.log(id)
+  const [entry, setEntry] = useState<Entry>();
+
+  useEffect(() => {
+    const entryRef = firestore.collection('entries').doc(id);
+    entryRef.get().then((doc) => {setEntry(toEntry(doc))})
+  }, [id]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -28,11 +34,11 @@ const EntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>Entry {entryId}</IonTitle>
+          <IonTitle>{entry?.title}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        {entry.description}
+        {entry?.description}
       </IonContent>
     </IonPage>
   );

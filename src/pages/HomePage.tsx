@@ -26,8 +26,11 @@ const HomePage: React.FC = () => {
     const entriesRef = firestore.collection('users')
                           .doc(userId)
                           .collection('entries');
-    entriesRef.get().then(({ docs }) => setEntries(docs.map(toEntry)))
-  }, [userId])
+    return entriesRef.onSnapshot(({ docs }) => setEntries(docs.map(toEntry)))
+    // entriesRef.get().then(({ docs }) => setEntries(docs.map(toEntry)))
+  }, [userId]);
+
+  console.log('[HomePage] render entries', entries)
   
   return (
     <IonPage>

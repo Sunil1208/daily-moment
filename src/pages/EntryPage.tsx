@@ -58,6 +58,7 @@ const EntryPage: React.FC = () => {
         <h2>
           {entry?.title}
         </h2>
+        <img src={entry?.pictureUrl} alt={entry?.title} />
         <p>
           {entry?.description}
         </p>

@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
                 key={entry.id}
                 routerLink={`/my/entries/view/${entry.id}`}
               >
-                {entry.description}
+                {entry.title}
               </IonItem>
             )
           })}

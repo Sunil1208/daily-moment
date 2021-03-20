@@ -1,12 +1,16 @@
 import {
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonItem,
   IonList,
   IonPage,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { add } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../auth';
 // import { entries } from '../data';
@@ -46,6 +50,11 @@ const HomePage: React.FC = () => {
             )
           })}
         </IonList>
+        <IonFab>
+          <IonFabButton>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

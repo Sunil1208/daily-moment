@@ -50,7 +50,7 @@ const HomePage: React.FC = () => {
             )
           })}
         </IonList>
-        <IonFab>
+        <IonFab vertical="bottom" horizontal="end">
           <IonFabButton>
             <IonIcon icon={add} />
           </IonFabButton>

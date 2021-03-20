@@ -17,8 +17,18 @@ import {
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../auth';
-import { firestore } from '../firebase';
+import { firestore , storage } from '../firebase';
 
+
+async function savePicture(blobUrl, userId) {
+    const pictureRef = storage.ref(`/users/${userId}/pictures/${Date.now()}`);
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    const snapshot =  await pictureRef.put(blob);
+    const url = await snapshot.ref.getDownloadURL();
+    console.log('savved url', url)
+    return url;
+}
 
 const AddEntryPage: React.FC = () => {
   const { userId } = useAuth();
@@ -56,12 +66,16 @@ const AddEntryPage: React.FC = () => {
   }
 
   const handleSave = async () => {
-    console.table(localState)
     const entriesRef = firestore.collection('users').doc(userId).collection('entries')
     const entryData = {
       'title': localState.title, 
       'description': localState.description, 
-      'date': localState.date}
+      'date': localState.date,
+      'pictureUrl': localState.pictureUrl
+    }
+    if (localState.pictureUrl.startsWith('blob:')){
+      entryData.pictureUrl = await savePicture(localState.pictureUrl, userId);
+    }
     const entryRef = await entriesRef.add(entryData);
     console.log('saved', entryRef.id)
     history.goBack()

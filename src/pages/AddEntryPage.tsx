@@ -14,11 +14,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { CameraResultType, Plugins } from '@capacitor/core';
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../auth';
 import { firestore , storage } from '../firebase';
-
+const { Camera } = Plugins;
 
 async function savePicture(blobUrl, userId) {
     const pictureRef = storage.ref(`/users/${userId}/pictures/${Date.now()}`);
@@ -65,6 +66,20 @@ const AddEntryPage: React.FC = () => {
     }
   }
 
+  const handlePictureClick = async () => {
+    // fileInputRef.current.click(); // for web
+    // handle if the user click back from the photo or camera app (handling uncaught error)
+    try {
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+      });
+      setLocalState({...localState, 'pictureUrl': photo.webPath})
+      console.log('photo:', photo.webPath);
+    } catch (error) {
+      console.log('Camera error', error)
+    }
+  }
+
   const handleSave = async () => {
     const entriesRef = firestore.collection('users').doc(userId).collection('entries')
     const entryData = {
@@ -73,7 +88,7 @@ const AddEntryPage: React.FC = () => {
       'date': localState.date,
       'pictureUrl': localState.pictureUrl
     }
-    if (localState.pictureUrl.startsWith('blob:')){
+    if (!localState.pictureUrl.startsWith('/assets')){
       entryData.pictureUrl = await savePicture(localState.pictureUrl, userId);
     }
     const entryRef = await entriesRef.add(entryData);
@@ -120,7 +135,8 @@ const AddEntryPage: React.FC = () => {
             <img 
               src={localState.pictureUrl} 
               alt=""
-              onClick={() => fileInputRef.current.click()}   //works as if clicked on the input file button
+              //onClick={() => fileInputRef.current.click()}   //works as if clicked on the input file button
+              onClick={handlePictureClick}
               style={{cursor: 'pointer'}}
             />
           </IonItem>

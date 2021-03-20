@@ -6,6 +6,7 @@ import { home as homeIcon, settings as settingsIcon } from 'ionicons/icons';
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from './auth';
+import AddEntryPage from './pages/AddEntryPage';
 import EntryPage from './pages/EntryPage';
 import HomePage from './pages/HomePage';
 import SettingsPage from './pages/SettingsPage';
@@ -25,7 +26,10 @@ const AppTabs: React.FC = () => {
           <Route exact path="/my/settings">
             <SettingsPage />
           </Route>
-          <Route exact path="/my/entries/:id">
+          <Route exact path="/my/entries/add">
+            <AddEntryPage />
+          </Route>
+          <Route exact path="/my/entries/view/:id">
             <EntryPage />
           </Route>
         </IonRouterOutlet>

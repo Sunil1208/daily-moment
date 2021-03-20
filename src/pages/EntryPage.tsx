@@ -19,6 +19,7 @@ interface RouterParams {
 }
 
 const EntryPage: React.FC = () => {
+  console.log(['[EntryPage] render'])
   const { userId } = useAuth();
   const match = useRouteMatch<RouterParams>();
   const { id } = match.params;

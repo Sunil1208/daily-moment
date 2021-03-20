@@ -13,10 +13,10 @@ import { trash } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router';
 import { useAuth } from '../auth';
+import { getFormattedDate } from '../common/sharedData';
 // import { entries } from '../data';
 import { firestore } from '../firebase';
 import { Entry, toEntry }  from '../model';
-
 interface RouterParams {
   id: string;
 }
@@ -46,7 +46,7 @@ const EntryPage: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
-          <IonTitle>{entry?.title}</IonTitle>
+          <IonTitle>{getFormattedDate(entry?.date)}</IonTitle>
           <IonButtons slot="end">
             <IonButton onClick={handleDelete}>
               <IonIcon icon={trash} slot="icon-only"/>
@@ -55,7 +55,12 @@ const EntryPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        {entry?.description}
+        <h2>
+          {entry?.title}
+        </h2>
+        <p>
+          {entry?.description}
+        </p>
       </IonContent>
     </IonPage>
   );

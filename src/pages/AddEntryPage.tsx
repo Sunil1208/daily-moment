@@ -26,7 +26,8 @@ const AddEntryPage: React.FC = () => {
   const [localState, setLocalState] = useState({
     'title': '',
     'description': '',
-    'date': ''
+    'date': '',
+    'pictureUrl': '/assets/placeholder.png'
   });
 
 
@@ -35,6 +36,16 @@ const AddEntryPage: React.FC = () => {
       ...localState,
       [name]: event.detail.value
     })
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files.length > 0){
+      const file = event.target.files.item(0);
+      const pictureUrl = URL.createObjectURL(file);
+      console.log('created URL', pictureUrl)
+      setLocalState({...localState, 'pictureUrl': pictureUrl})
+    }
+    console.log(event.target.files)
   }
 
   const handleSave = async () => {
@@ -74,6 +85,16 @@ const AddEntryPage: React.FC = () => {
               onIonChange={handleChange('title')}
               value={localState.title}
             />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="stacked">Picture</IonLabel>
+            <br />
+            <input 
+              type="file" 
+              accept="image/*"
+              onChange={handleFileChange} 
+              />
+            <img src={localState.pictureUrl} alt=""/>
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Description</IonLabel>

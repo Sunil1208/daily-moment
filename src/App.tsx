@@ -1,4 +1,5 @@
 import {
+  getPlatforms,
   IonApp, IonLoading
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
@@ -18,6 +19,8 @@ const App: React.FC = () => {
   if (loading){
     return <IonLoading isOpen />
   }
+
+  console.log('platforms', getPlatforms())
   return (
     <IonApp>
       <AuthContext.Provider value={auth}>

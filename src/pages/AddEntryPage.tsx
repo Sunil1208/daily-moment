@@ -13,6 +13,7 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
+  isPlatform,
 } from '@ionic/react';
 import { CameraResultType, Plugins } from '@capacitor/core';
 import React, { useState, useEffect, useRef } from 'react';
@@ -68,6 +69,7 @@ const AddEntryPage: React.FC = () => {
 
   const handlePictureClick = async () => {
     // fileInputRef.current.click(); // for web
+    if (isPlatform('capacitor')){
     // handle if the user click back from the photo or camera app (handling uncaught error)
     try {
       const photo = await Camera.getPhoto({
@@ -77,6 +79,9 @@ const AddEntryPage: React.FC = () => {
       console.log('photo:', photo.webPath);
     } catch (error) {
       console.log('Camera error', error)
+    }
+    } else {
+      fileInputRef.current.click();
     }
   }
 
